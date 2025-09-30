@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:product_listing_app/features/home/bloc/product_bloc.dart';
 import 'package:product_listing_app/features/home/bloc/product_event.dart';
 import 'package:product_listing_app/features/home/bloc/product_state.dart';
@@ -95,8 +96,26 @@ class _HomePageState extends State<HomePage> {
               ),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Search products...',
-                  prefixIcon: Icon(Icons.search, color: Colors.grey.shade600),
+                  hintText: 'Search',
+                  hintStyle: const TextStyle(
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    height: 30 / 14, // line-height / font-size
+                    letterSpacing: 0,
+                  ),
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: SvgPicture.asset(
+                      'assets/icons/search.svg',
+                      width: 25,
+                      height: 25,
+                      colorFilter: ColorFilter.mode(
+                        Colors.grey.shade600,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding:

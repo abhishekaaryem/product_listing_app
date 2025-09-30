@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:product_listing_app/features/home/models/product_models.dart';
 
 class ProductCard extends StatefulWidget {
@@ -114,36 +115,27 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                     ),
                   ),
+                // SVG Like Button
                 Positioned(
                   top: 8,
                   right: 8,
                   child: GestureDetector(
                     onTap: widget.onFavoritePressed,
-                    child: AnimatedContainer(
+                    child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 300),
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: product.isFavorite ? Colors.green : Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 25),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        child: Icon(
-                          Icons.favorite,
-                          key: ValueKey(product.isFavorite),
-                          color: product.isFavorite
-                              ? Colors.white
-                              : Colors.grey.shade400,
-                          size: 20,
-                        ),
+                      transitionBuilder: (child, animation) {
+                        return ScaleTransition(
+                          scale: animation,
+                          child: child,
+                        );
+                      },
+                      child: SvgPicture.asset(
+                        product.isFavorite
+                            ? 'assets/icons/heart_filled.svg' // Path to your filled heart SVG
+                            : 'assets/icons/heart_outline.svg', // Path to your outline heart SVG
+                        key: ValueKey(product.isFavorite),
+                        width: 24,
+                        height: 24,
                       ),
                     ),
                   ),

@@ -1,6 +1,7 @@
 // lib/presentation/nav/widgets/bottom_nav_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:product_listing_app/core/nav_bar/navbar_cubit.dart';
 
@@ -87,21 +88,21 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _NavBarButton(
-                  icon: Icons.home_rounded,
+                  iconPath: 'assets/icons/home.svg',
                   label: 'Home',
                   index: 0,
                   activeIndex: current,
                   onTap: () => context.read<NavigationCubit>().changeTab(0),
                 ),
                 _NavBarButton(
-                  icon: Icons.favorite_rounded,
+                  iconPath: 'assets/icons/heart.svg',
                   label: 'Wishlist',
                   index: 1,
                   activeIndex: current,
                   onTap: () => context.read<NavigationCubit>().changeTab(1),
                 ),
                 _NavBarButton(
-                  icon: Icons.person_rounded,
+                  iconPath: 'assets/icons/profile.svg',
                   label: 'Profile',
                   index: 2,
                   activeIndex: current,
@@ -117,14 +118,14 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 }
 
 class _NavBarButton extends StatelessWidget {
-  final IconData icon;
+  final String iconPath;
   final String label;
   final int index;
   final int activeIndex;
   final VoidCallback onTap;
 
   const _NavBarButton({
-    required this.icon,
+    required this.iconPath,
     required this.label,
     required this.index,
     required this.activeIndex,
@@ -144,8 +145,15 @@ class _NavBarButton extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon,
-                    color: isActive ? Colors.white : Colors.grey, size: 24),
+                SvgPicture.asset(
+                  iconPath,
+                  width: 24,
+                  height: 24,
+                  colorFilter: ColorFilter.mode(
+                    isActive ? Colors.white : Colors.grey,
+                    BlendMode.srcIn,
+                  ),
+                ),
                 if (isActive) ...[
                   const SizedBox(width: 8),
                   Text(
